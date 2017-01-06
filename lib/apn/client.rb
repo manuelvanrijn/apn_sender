@@ -17,7 +17,8 @@ module APN
       if IO.select([socket], nil, nil, 1) && error = socket.read(6)
         error = error.unpack("ccN")
         APN.log(:error, "Error on message: #{error}")
-        return false
+        reset_socket
+        return error
       end
 
       APN.log(:debug, "Message sent.")
